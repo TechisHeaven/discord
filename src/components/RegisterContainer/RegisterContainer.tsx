@@ -1,6 +1,7 @@
 "use client";
 import Link from "next/link";
 import { motion } from "framer-motion";
+import { DOBContainer } from "./DOBContainer";
 
 export default function RegisterContainer() {
   // animation function
@@ -74,6 +75,15 @@ export default function RegisterContainer() {
             className="bg-gray-800 p-2 text-white outline-none rounded-sm"
           />
         </div>
+        <div className="flex flex-col gap-2">
+          <label
+            htmlFor="dob"
+            className="uppercase text-xs font-bold text-gray-300"
+          >
+            Date of birth <span className="text-red-500">*</span>
+          </label>
+          <DOBContainer />
+        </div>
         <div>
           <button
             style={{ background: "hsl(235 calc(1 * 85.6%) 64.7% / 1)" }}
@@ -81,7 +91,7 @@ export default function RegisterContainer() {
           >
             Continue
           </button>
-          <p className="text-xs">
+          <p className="text-xs py-2 text-gray-400">
             By registering , you agree to Discords Terms of Service and Privacy
             Policy
           </p>

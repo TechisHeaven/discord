@@ -1,6 +1,7 @@
 "use client";
 import Link from "next/link";
 import { motion } from "framer-motion";
+import React, { useState } from "react";
 
 export default function LoginContainer() {
   // animation function
@@ -23,6 +24,24 @@ export default function LoginContainer() {
     },
     exit: { opacity: 1, y: 0 },
   };
+
+  //react state
+  const [FormData, setFormData] = useState({
+    email: "",
+    password: "",
+  });
+  function handleLogin(e: any) {
+    e.preventDefault();
+    const { email, password } = FormData;
+  }
+
+  function handleFormData(event: any) {
+    const { name, value } = event.target;
+    setFormData((prevFormData) => ({
+      ...prevFormData,
+      [name]: value,
+    }));
+  }
   return (
     <motion.div
       {...anim(opacity)}
@@ -32,7 +51,7 @@ export default function LoginContainer() {
         <h1 className="text-white text-2xl font-semibold">Welcome back!</h1>
         <p className="text-gray-400">We're so excited to see you again!</p>
       </div>
-      <form className="flex flex-col gap-4 py-4">
+      <form onSubmit={handleLogin} className="flex flex-col gap-4 py-4">
         <div className="flex flex-col gap-2">
           <label
             htmlFor="email"
@@ -41,6 +60,7 @@ export default function LoginContainer() {
             email or phone number <span className="text-red-500">*</span>
           </label>
           <input
+            onChange={handleFormData}
             type="text"
             id="email"
             name="email"
@@ -55,6 +75,7 @@ export default function LoginContainer() {
             Password <span className="text-red-500">*</span>
           </label>
           <input
+            onChange={handleFormData}
             type="password"
             id="password"
             name="password"
