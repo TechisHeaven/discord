@@ -18,7 +18,7 @@ export default function AddServerDialog({
 }) {
   const [image, setImage] = useState({ preview: "", raw: "" });
 
-  const handleChange = (e) => {
+  const handleChange = (e: any) => {
     if (e.target.files.length) {
       setImage({
         preview: URL.createObjectURL(e.target.files[0]),
@@ -27,7 +27,7 @@ export default function AddServerDialog({
     }
   };
 
-  const handleUpload = async (e) => {
+  const handleUpload = async (e: any) => {
     e.preventDefault();
     const formData = new FormData();
     formData.append("image", image.raw);
