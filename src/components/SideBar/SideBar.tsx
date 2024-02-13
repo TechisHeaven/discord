@@ -15,7 +15,7 @@ const AddServerDialog = dynamic(
 
 export default async function SideBar() {
   return (
-    <nav className="w-[72px] bg-gray-800 h-screen sticky top-0">
+    <nav className="w-[72px] bg-gray-800 h-screen sticky top-0 border border-l-0 border-b-0 border-t-0 border-gray-600">
       <div className="items">
         <ToolTip text={"Direct Message"}>
           <Link href="/channels/me">
