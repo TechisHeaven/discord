@@ -2,7 +2,7 @@
 import ChannelsSidebar from "@/components/ChannelsSidebar/ChannelsSidebar";
 import MeSidebar from "@/components/ChannelsSidebar/MeSidebar";
 import SideBar from "@/components/SideBar/SideBar";
-import { redirect, usePathname } from "next/navigation";
+import { usePathname } from "next/navigation";
 
 export default function Template({ children }: { children: React.ReactNode }) {
   const url = usePathname();
@@ -12,7 +12,7 @@ export default function Template({ children }: { children: React.ReactNode }) {
   // }
   // const isMePage = true;
   return (
-    <div className="flex overflow-y-hidden">
+    <div className="flex overflow-y-hidden relative">
       <SideBar />
       {isMePage ? <MeSidebar /> : <ChannelsSidebar />}
       {children}

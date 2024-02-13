@@ -34,17 +34,17 @@ export default function MeSidebar() {
   }, [url]);
 
   return (
-    <div className="w-[240px] min-w-[240px] bg-gray-700 h-screen sticky top-0">
+    <div className="w-[240px] min-w-[240px] bg-darkSecondaryColor2 h-screen sticky top-0">
       <div className="containerOfSidebar">
         <FindSearchDialog />
-        <hr className="bg-gray-500 h-[1px] border-0" />
+        <hr className="bg-darkSecondaryColor h-[1px] border-0" />
         <div className="p-2">
           <div className="flex flex-col gap-2">
             <Link
               href={"/channels/me"}
               className={`${
-                selectedTab === "me" && "bg-gray-500 text-white"
-              } friendTab flex items-center flex-row p-2 hover:bg-gray-600 transition-colors gap-3 cursor-pointer rounded-sm text-gray-400`}
+                selectedTab === "me" && "bg-darkSecondaryColorHover  text-white"
+              } friendTab flex items-center flex-row p-2 hover:bg-darkSecondaryColorInput transition-colors gap-3 cursor-pointer rounded-sm text-gray-400`}
             >
               <User />
               <h1>Friends</h1>
@@ -52,8 +52,9 @@ export default function MeSidebar() {
             <Link
               href={"/store"}
               className={`${
-                selectedTab === "store" && "bg-gray-500 text-white"
-              } friendTab flex items-center flex-row p-2 hover:bg-gray-600 transition-colors gap-3 cursor-pointer rounded-sm text-gray-400`}
+                selectedTab === "store" &&
+                "bg-darkSecondaryColorHover text-white"
+              } friendTab flex items-center flex-row p-2 hover:bg-darkSecondaryColorInput transition-colors gap-3 cursor-pointer rounded-sm text-gray-400`}
             >
               <Rocket />
               <h1>Nitro</h1>
@@ -71,8 +72,9 @@ export default function MeSidebar() {
                       key={i}
                       href={`/channels/me/${i}`}
                       className={`${
-                        selectedTab === i.toString() && "bg-gray-500 text-white"
-                      } message-item flex items-center gap-2 p-2 py-1 my-2 hover:bg-gray-500 cursor-pointer rounded-sm text-gray-300 transition-colors`}
+                        selectedTab === i.toString() &&
+                        "bg-darkSecondaryColorHover text-white"
+                      } message-item flex items-center gap-2 p-2 py-1 my-2 hover:bg-darkSecondaryColorInput cursor-pointer rounded-sm text-gray-300 transition-colors`}
                     >
                       <div className="relative">
                         <Image

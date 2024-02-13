@@ -12,7 +12,7 @@ export default function FindSearchDialog() {
     <div className="findorsearch p-2">
       <Dialog>
         <DialogTrigger className="w-full">
-          <button className="bg-gray-800 text-gray-300 rounded-sm p-2 text-left text-xs w-full">
+          <button className="bg-darkSecondaryColor text-gray-300 rounded-sm p-2 text-left text-xs w-full">
             Find or start a conversation
           </button>
         </DialogTrigger>

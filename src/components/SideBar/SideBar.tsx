@@ -15,7 +15,7 @@ const AddServerDialog = dynamic(
 
 export default async function SideBar() {
   return (
-    <nav className="w-[72px] bg-gray-800 h-screen sticky top-0 border border-l-0 border-b-0 border-t-0 border-gray-600">
+    <nav className="w-[72px] bg-darkSecondaryColor  h-screen sticky top-0 border border-l-0 border-b-0 border-t-0 border-gray-600">
       <div className="items">
         <ToolTip text={"Direct Message"}>
           <Link href="/channels/me">
@@ -27,8 +27,7 @@ export default async function SideBar() {
                   width={50}
                   height={50}
                   alt="discord logo"
-                  className="p-[10px] w-12 h-12 object-contain rounded-2xl"
-                  style={{ background: "hsl(235 calc(1 * 85.6%) 64.7% / 1)" }}
+                  className="p-[10px] w-12 h-12 object-contain rounded-2xl bg-MainPrimaryColor"
                 ></Image>
               </div>
             </div>
