@@ -1,11 +1,13 @@
 "use client";
-import { User } from "lucide-react";
+import { Rocket, User } from "lucide-react";
 import dynamic from "next/dynamic";
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { ScrollArea } from "../ui/scroll-area";
 import ContextMenuBox from "../ContextMenuBox/ContextMenuBox";
+import { useEffect, useState } from "react";
+import { revalidatePath } from "next/cache";
 const ControlBox = dynamic(() => import("./ControlBox/ControlBox"), {
   loading: () => <p>Loading...</p>,
   ssr: false,
@@ -18,22 +20,44 @@ const FindSearchDialog = dynamic(
 );
 export default function MeSidebar() {
   const url = usePathname();
+  const UrlArray = url.split("/");
+  const newSelectedTab = UrlArray.slice(-1)[0];
+  const [selectedTab, setSelectedTab] = useState<string>(newSelectedTab);
+
   //   const isSelectedTab = url.includes("me");
-  const isSelectedTab = url.split("/")[2] === "me";
+  // let isSelectedTab: string | boolean = url.split("/")[2] === "me";
+
+  useEffect(() => {
+    // Update selectedTab whenever the URL changes
+    const newSelectedTab = UrlArray.slice(-1)[0];
+    setSelectedTab(newSelectedTab);
+  }, [url]);
 
   return (
-    <div className="w-[240px] bg-gray-700 h-screen sticky top-0">
+    <div className="w-[240px] min-w-[240px] bg-gray-700 h-screen sticky top-0">
       <div className="containerOfSidebar">
         <FindSearchDialog />
         <hr className="bg-gray-500 h-[1px] border-0" />
         <div className="p-2">
-          <div
-            className={`${
-              isSelectedTab && "bg-gray-500 text-white"
-            } friendTab flex items-center flex-row p-2 hover:bg-gray-600 transition-colors gap-3 cursor-pointer rounded-sm text-gray-400`}
-          >
-            <User />
-            <h1>Friends</h1>
+          <div className="flex flex-col gap-2">
+            <Link
+              href={"/channels/me"}
+              className={`${
+                selectedTab === "me" && "bg-gray-500 text-white"
+              } friendTab flex items-center flex-row p-2 hover:bg-gray-600 transition-colors gap-3 cursor-pointer rounded-sm text-gray-400`}
+            >
+              <User />
+              <h1>Friends</h1>
+            </Link>
+            <Link
+              href={"/store"}
+              className={`${
+                selectedTab === "store" && "bg-gray-500 text-white"
+              } friendTab flex items-center flex-row p-2 hover:bg-gray-600 transition-colors gap-3 cursor-pointer rounded-sm text-gray-400`}
+            >
+              <Rocket />
+              <h1>Nitro</h1>
+            </Link>
           </div>
           <p className="uppercase text-xs text-gray-400 my-2 mt-4">
             Direct Messages
@@ -45,8 +69,10 @@ export default function MeSidebar() {
                   <ContextMenuBox key={i} id={i}>
                     <Link
                       key={i}
-                      href={"/channels/me/userid"}
-                      className="message-item flex items-center gap-2 p-2 py-1 my-2 hover:bg-gray-500 cursor-pointer rounded-sm text-gray-300 transition-colors"
+                      href={`/channels/me/${i}`}
+                      className={`${
+                        selectedTab === i.toString() && "bg-gray-500 text-white"
+                      } message-item flex items-center gap-2 p-2 py-1 my-2 hover:bg-gray-500 cursor-pointer rounded-sm text-gray-300 transition-colors`}
                     >
                       <div className="relative">
                         <Image
