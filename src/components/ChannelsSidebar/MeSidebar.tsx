@@ -8,6 +8,7 @@ import { ScrollArea } from "../ui/scroll-area";
 import ContextMenuBox from "../ContextMenuBox/ContextMenuBox";
 import { useEffect, useState } from "react";
 import { revalidatePath } from "next/cache";
+import { FriendIconMain } from "../Header/Header";
 const ControlBox = dynamic(() => import("./ControlBox/ControlBox"), {
   loading: () => <p>Loading...</p>,
   ssr: false,
@@ -46,7 +47,7 @@ export default function MeSidebar() {
                 selectedTab === "me" && "bg-darkSecondaryColorHover  text-white"
               } friendTab flex items-center flex-row p-2 hover:bg-darkSecondaryColorInput transition-colors gap-3 cursor-pointer rounded-sm text-gray-400`}
             >
-              <User />
+              <FriendIconMain />
               <h1>Friends</h1>
             </Link>
             <Link
