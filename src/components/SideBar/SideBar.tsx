@@ -3,6 +3,7 @@ import Link from "next/link";
 import ToolTip from "../ToolTip/ToolTip";
 import { Plus } from "lucide-react";
 import dynamic from "next/dynamic";
+import ChannelsList from "../ChannelsList/ChannelsList";
 
 const AddServerDialog = dynamic(
   () => import("../AddServerDialog/AddServerDialog"),
@@ -34,12 +35,13 @@ export default async function SideBar() {
           </Link>
         </ToolTip>
         <hr className="w-[50%] m-auto " />
+        <ChannelsList />
         <AddServerDialog>
           <ToolTip text={"Add a Server"}>
             <div className="item py-2 relative group">
               <div className="indicator group-hover:h-10 group-hover:opacity-100 opacity-0 transition-all w-1 h-6 left-0 rounded-br-md rounded-tr-md bottom-[50%] translate-y-[50%] bg-white absolute "></div>
-              <div className="mx-3 active:translate-y-[2px] p-3 rounded-full hover:rounded-2xl hover:bg-green-500 group transition-all bg-gray-700 ">
-                <Plus className="text-green-500 group-hover:text-white" />
+              <div className="mx-3 active:translate-y-[2px] p-3 rounded-3xl hover:rounded-2xl hover:bg-green-500 group transition-all bg-gray-700 ">
+                <Plus className="text-green-500 group-hover:text-white " />
               </div>
             </div>
           </ToolTip>

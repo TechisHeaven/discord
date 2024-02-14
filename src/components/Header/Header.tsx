@@ -3,7 +3,7 @@ import { Popover, PopoverContent, PopoverTrigger } from "../ui/popover";
 
 export default function Header({ children }: { children: React.ReactNode }) {
   return (
-    <header className="p-2 w-full flex-row min-h-12 px-4 shadow-md flex items-center sticky top-0">
+    <header className="p-2 w-full flex-row min-h-12 px-4 shadow-md flex items-center sticky top-0 bg-darkSecondaryColor4 ">
       <div className="w-full">{children}</div>
       <Popover>
         <PopoverTrigger>

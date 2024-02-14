@@ -1,20 +1,18 @@
 import { Headphones, Mic, Settings } from "lucide-react";
 import Image from "next/image";
-import "./ControlBox.css";
-
 export default function ControlBox() {
   // hsl(228 calc(1 * 6%) 32.5% / 0.6);
 
   return (
     <div className="absolute bg-darkSecondaryColor3 bottom-0 w-full  flex py-1 px-[2px]">
-      <div className="profileHover flex gap-2 items-center  z-10 transition-colors cursor-pointer p-1 rounded-md">
+      <div className="profileHover hover:bg-darkSecondaryColorHover flex gap-2 items-center  z-10 transition-colors cursor-pointer p-1 rounded-md">
         <Image
           src={"/discord-icon.png"}
+          // src={"/profile.jpg"}
           width={20}
           height={20}
           alt="profile-image"
-          className="p-[10px] w-8 h-8 object-contain rounded-2xl"
-          style={{ background: "hsl(235 calc(1 * 85.6%) 64.7% / 1)" }}
+          className=" w-8 h-8 object-contain rounded-2xl"
         />
         <div>
           <p className="text-white text-sm truncate max-w-[80%] overflow-hidden">

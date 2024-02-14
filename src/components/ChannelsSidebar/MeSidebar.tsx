@@ -1,5 +1,5 @@
 "use client";
-import { Rocket, User } from "lucide-react";
+import { Cross, Rocket, User, X } from "lucide-react";
 import dynamic from "next/dynamic";
 import Image from "next/image";
 import Link from "next/link";
@@ -9,6 +9,17 @@ import ContextMenuBox from "../ContextMenuBox/ContextMenuBox";
 import { useEffect, useState } from "react";
 import { revalidatePath } from "next/cache";
 import { FriendIconMain } from "../Header/Header";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from "../ui/alert-dialog";
 const ControlBox = dynamic(() => import("./ControlBox/ControlBox"), {
   loading: () => <p>Loading...</p>,
   ssr: false,
@@ -75,11 +86,11 @@ export default function MeSidebar() {
                       className={`${
                         selectedTab === i.toString() &&
                         "bg-darkSecondaryColorHover text-white"
-                      } message-item flex items-center gap-2 p-2 py-1 my-2 hover:bg-darkSecondaryColorInput cursor-pointer rounded-sm text-gray-300 transition-colors`}
+                      } message-item group flex items-center gap-2 p-2 py-1 my-2 hover:bg-darkSecondaryColorInput cursor-pointer rounded-sm text-gray-300 transition-colors`}
                     >
                       <div className="relative">
                         <Image
-                          src={"/discord.png"}
+                          src={"/profile.jpg"}
                           width={20}
                           height={20}
                           alt="profile-image"
@@ -90,6 +101,29 @@ export default function MeSidebar() {
                         </div>
                       </div>
                       <h1>Baba Vermanath</h1>
+                      <AlertDialog>
+                        <AlertDialogTrigger className="absolute  right-2">
+                          <X className="w-4 transition-opacity group-hover:opacity-100 opacity-0" />
+                        </AlertDialogTrigger>
+                        <AlertDialogContent className="bg-darkSecondaryColor2 border-0">
+                          <AlertDialogHeader>
+                            <AlertDialogTitle className="text-white">
+                              Are you absolutely sure?
+                            </AlertDialogTitle>
+                            <AlertDialogDescription>
+                              This action cannot be undone. This will
+                              permanently delete your conversation and remove
+                              your data from our servers.
+                            </AlertDialogDescription>
+                          </AlertDialogHeader>
+                          <AlertDialogFooter>
+                            <AlertDialogCancel>Cancel</AlertDialogCancel>
+                            <AlertDialogAction className="bg-MainPrimaryColor">
+                              Continue
+                            </AlertDialogAction>
+                          </AlertDialogFooter>
+                        </AlertDialogContent>
+                      </AlertDialog>
                     </Link>
                   </ContextMenuBox>
                 );
