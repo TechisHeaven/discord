@@ -23,7 +23,15 @@ export default function Page() {
           <p>Baba Vermanath</p>
         </div>
       </Header>
-      <ChatArea />
+      <ChatArea
+        isProfile={true}
+        userData={{
+          id: 1,
+          name: "Baba vermanath",
+          imageUrl: "/profile.jpg",
+          username: "babavermanath username",
+        }}
+      />
     </div>
   );
 }

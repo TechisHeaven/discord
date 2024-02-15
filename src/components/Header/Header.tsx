@@ -1,15 +1,22 @@
 import { Inbox, User2 } from "lucide-react";
 import { Popover, PopoverContent, PopoverTrigger } from "../ui/popover";
+// import ToolTipCustom from "../ToolTipCustom/ToolTipCustom";
+import dynamic from "next/dynamic";
+const ToolTipCustom = dynamic(() => import("../ToolTipCustom/ToolTipCustom"), {
+  ssr: false,
+});
 
 export default function Header({ children }: { children: React.ReactNode }) {
   return (
     <header className="p-2 w-full flex-row min-h-12 px-4 shadow-md flex items-center sticky top-0 bg-darkSecondaryColor4 ">
       <div className="w-full">{children}</div>
       <Popover>
-        <PopoverTrigger>
-          <div className="notification-inbox  right-0 px-2">
-            <Inbox className="text-gray-300" />
-          </div>
+        <PopoverTrigger className="flex items-center">
+          <ToolTipCustom text="inbox">
+            <p className="notification-inbox right-0 px-2">
+              <Inbox className="text-gray-300" />
+            </p>
+          </ToolTipCustom>
         </PopoverTrigger>
         <PopoverContent>Place content for the popover here.</PopoverContent>
       </Popover>
