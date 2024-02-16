@@ -1,6 +1,20 @@
 import MainSideBar from "@/components/ChannelsSidebar/MainSideBar/MainSideBar";
-import SideBar from "@/components/SideBar/SideBar";
+
 import { TooltipProvider } from "@/components/ui/tooltip";
+import dynamic from "next/dynamic";
+
+const SideBar = dynamic(() => import("@/components/SideBar/SideBar"), {
+  loading: () => <SideBarLoading />,
+  ssr: false,
+});
+
+const SideBarLoading = () => {
+  return (
+    <div className="p-2 h-screen w-[88px] bg-darkSecondaryColor">
+      <div className="w-full h-full bg-darkSecondaryColorHover animate-pulse"></div>
+    </div>
+  );
+};
 
 export default function Layout({
   children,

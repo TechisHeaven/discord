@@ -20,8 +20,9 @@ export const verifyAuth = async (token: string) => {
       token,
       new TextEncoder().encode(getJwtSecretKey())
     );
+
     return verified.payload as UserJwtPayload;
   } catch (error) {
-    throw new Error("Your token has Expired");
+    throw new Error(error + "Your token has Expired");
   }
 };

@@ -27,9 +27,18 @@ const ControlBox = dynamic(() => import("./ControlBox/ControlBox"), {
 const FindSearchDialog = dynamic(
   () => import("../FindSearchDialog/FindSearchDiaog"),
   {
+    loading: () => <FindSearchLoader />,
     ssr: false,
   }
 );
+
+const FindSearchLoader = () => {
+  return (
+    <div className="h-12 w-full p-2">
+      <div className="w-full h-8 bg-darkSecondaryColorHover rounded-sm animate-pulse"></div>
+    </div>
+  );
+};
 export default function MeSidebar() {
   const url = usePathname();
   const UrlArray = url.split("/");
@@ -132,6 +141,7 @@ export default function MeSidebar() {
           </div>
         </div>
       </div>
+
       <ControlBox />
     </div>
   );

@@ -49,6 +49,20 @@ export default function RegisterContainer() {
         </div>
         <div className="flex flex-col gap-2">
           <label
+            htmlFor="name"
+            className="uppercase text-xs font-bold text-gray-300"
+          >
+            name <span className="text-red-500">*</span>
+          </label>
+          <input
+            type="text"
+            id="name"
+            name="name"
+            className="bg-gray-800 p-2 text-white outline-none rounded-sm"
+          />
+        </div>
+        <div className="flex flex-col gap-2">
+          <label
             htmlFor="username"
             className="uppercase text-xs font-bold text-gray-300"
           >
