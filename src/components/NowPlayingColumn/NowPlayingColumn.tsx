@@ -7,7 +7,7 @@ export default function NowPlayingColumn() {
           <h5 className="text-white font-semibold">Its quiet for now...</h5>
           <p className="capitalize text-gray-300 text-xs">
             when a friend start an activity--like playing a game or hanging out
-            on voice--we'll show it here!
+            on voice--we&apos;ll show it here!
           </p>
         </div>
       </div>

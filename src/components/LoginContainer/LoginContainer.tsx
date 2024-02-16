@@ -4,7 +4,6 @@ import { motion } from "framer-motion";
 import React, { useState } from "react";
 import { useRouter } from "next/navigation";
 import { loginUser } from "@/actions/auth/action";
-import showToast from "../Toast/showToast";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { z } from "zod";
 import { LoginFormSchema } from "@/lib/loginFormSchema";
@@ -96,7 +95,7 @@ export default function LoginContainer() {
     >
       <div className="heading text-center">
         <h1 className="text-white text-2xl font-semibold">Welcome back!</h1>
-        <p className="text-gray-400">We're so excited to see you again!</p>
+        <p className="text-gray-400">We&apos;re so excited to see you again!</p>
       </div>
       <form
         onSubmit={handleSubmit(handleLogin)}

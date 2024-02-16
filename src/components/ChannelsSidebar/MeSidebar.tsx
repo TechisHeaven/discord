@@ -52,7 +52,7 @@ export default function MeSidebar() {
     // Update selectedTab whenever the URL changes
     const newSelectedTab = UrlArray.slice(-1)[0];
     setSelectedTab(newSelectedTab);
-  }, [url]);
+  }, [url, UrlArray]);
 
   return (
     <div className="w-[240px] min-w-[240px] bg-darkSecondaryColor2 h-screen sticky top-0">
