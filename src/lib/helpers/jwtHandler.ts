@@ -1,18 +1,21 @@
 import * as jwt from "jsonwebtoken";
 import { processEnv } from "./processEnvCustom";
+import { SignJWT, jwtVerify } from "jose";
 
-export default function CreateJwtToken(payload: { id: string; name: string }) {
-  const secretKey = processEnv.SECRET_KEY;
+const secretKey = processEnv.SECRET_KEY;
 
-  // Payload for the token (you can customize this as per your needs)
+const key = new TextEncoder().encode(secretKey);
+export async function encrypt(payload: any) {
+  return await new SignJWT(payload)
+    .setProtectedHeader({ alg: "HS256" })
+    .setIssuedAt()
+    .setExpirationTime("1h")
+    .sign(key);
+}
 
-  // Options for the token (optional)
-  const options: jwt.SignOptions = {
-    expiresIn: "1h", // Token will expire in 1 hour
-  };
-
-  // Create the JWT
-  const token = jwt.sign(payload, secretKey, options);
-
-  return token;
+export async function decrypt(input: string): Promise<any> {
+  const { payload } = await jwtVerify(input, key, {
+    algorithms: ["HS256"],
+  });
+  return payload;
 }

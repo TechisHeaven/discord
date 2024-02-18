@@ -1,5 +1,6 @@
 "use server";
 
+import { processEnv } from "@/lib/helpers/processEnvCustom";
 import { LoginFormSchema } from "@/lib/loginFormSchema";
 import axios from "axios";
 import { cookies } from "next/headers";
@@ -20,24 +21,14 @@ export async function loginUser(data: Inputs) {
 
     const { email, password } = result.data;
 
-    const response = await axios.post("http://localhost:3000/api/auth/login", {
+    const response = await axios.post(`${processEnv.BASE_URL}/api/auth/login`, {
       email,
       password,
     });
 
-    // .then(function (response) {
-    //   console.log(response.data);
-
-    //   if (response.data.status === 200) {
-    //     cookies().set("session-token", response.data.token);
-    //     // return response.data;
-    //   }
-    //   return response.data;
-    // });
     if (response.status === 200) {
       cookies().set("session-token", response.data.token);
     }
-
     return response.data;
     // Return the entire response data
   } catch (error) {

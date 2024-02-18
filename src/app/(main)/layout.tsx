@@ -1,5 +1,4 @@
 import MainSideBar from "@/components/ChannelsSidebar/MainSideBar/MainSideBar";
-
 import { TooltipProvider } from "@/components/ui/tooltip";
 import dynamic from "next/dynamic";
 
@@ -16,7 +15,7 @@ const SideBarLoading = () => {
   );
 };
 
-export default function Layout({
+export default async function Layout({
   children,
 }: Readonly<{
   children: React.ReactNode;

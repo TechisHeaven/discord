@@ -1,4 +1,6 @@
 import { jwtVerify, SignJWT } from "jose";
+import { NextRequest, NextResponse } from "next/server";
+import { decrypt, encrypt } from "./helpers/jwtHandler";
 
 const getJwtSecretKey = () => {
   const secret = process.env.JWT_SECRET_KEY;
@@ -25,4 +27,23 @@ export const verifyAuth = async (token: string) => {
   } catch (error) {
     throw new Error(error + "Your token has Expired");
   }
+};
+
+export const updateSession = async (request: NextRequest) => {
+  const token = request.cookies.get("session-token")?.value;
+
+  if (!token) {
+    return;
+  }
+
+  const parsed = await decrypt(token);
+  parsed.expires = new Date(Date.now() + 10 * 1000);
+  const res = NextResponse.next();
+  res.cookies.set({
+    name: "session-token",
+    value: await encrypt(parsed),
+    httpOnly: true,
+    expires: parsed.expires,
+  });
+  return res;
 };
