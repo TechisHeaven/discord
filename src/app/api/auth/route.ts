@@ -2,12 +2,12 @@ import { NextRequest, NextResponse } from "next/server";
 import { PrismaClient } from "@prisma/client";
 import uuid4 from "uuid4";
 import { decrypt, encrypt } from "@/lib/helpers/jwtHandler";
+import { CreateHashPassword } from "@/lib/HandleHasingPassword";
 
 const prisma = new PrismaClient();
 
 export async function GET(request: NextRequest, response: NextResponse) {
   try {
-    const token = request.cookies.get("session-token")?.value;
     const header = await request.headers.get("authorization");
     if (!header) {
       return;
@@ -64,40 +64,62 @@ export async function POST(request: NextRequest, response: NextResponse) {
   try {
     //generate a new UUID4
     const id = uuid4();
-    const {
-      email,
-      name,
-      username,
-      password,
-      dob,
-      avatar,
-      channels,
-      friends,
-      servers,
-    } = await request.json();
+    let { email, name, username, password, dob } = await request.json();
 
+    const findDuplicate = await prisma.user.findFirst({
+      where: { OR: [{ username }, { email }] },
+    });
+    if (findDuplicate || findDuplicate !== null) {
+      return Response.json(
+        {
+          status: 401,
+          success: false,
+          message: "Email or Username Duplcation",
+          error: true,
+        },
+        { status: 401 }
+      );
+    }
+
+    const Hashedpassword: string = await CreateHashPassword(password);
     const newUser = await prisma.user.create({
       data: {
         id,
-        avatar,
-        channels,
         dob,
         email,
-        friends,
         name,
-        password,
-        servers,
+        password: Hashedpassword,
         username,
       },
     });
-
     if (newUser) {
       const token = await encrypt({ id, name });
-      return NextResponse.json({ ...newUser, token });
+      return Response.json(
+        { ...newUser, token, success: true, error: false, status: 200 },
+        { status: 200 }
+      );
+    } else {
+      return Response.json(
+        {
+          error: true,
+          success: false,
+          message: "User not Created",
+          status: 400,
+        },
+        { status: 400 }
+      );
     }
   } catch (error) {
     if (error) {
-      return NextResponse.json({ error });
+      return Response.json(
+        {
+          status: 501,
+          error: true,
+          success: false,
+          message: "Something Went Wrong" + error,
+        },
+        { status: 501 }
+      );
     }
   }
 }

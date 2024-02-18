@@ -10,7 +10,13 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 
-export function DOBContainer() {
+export function DOBContainer({
+  setDob,
+  dob,
+}: {
+  setDob: any;
+  dob: { day: string; month: string; year: string };
+}) {
   const months: string[] = [
     "January",
     "February",
@@ -41,10 +47,16 @@ export function DOBContainer() {
     { length: currentYear - 1947 + 1 },
     (_, i) => 1947 + i
   );
+  const handleDateChange = (e: any, name: string) => {
+    setDob((prevDob: any) => ({
+      ...prevDob,
+      [name]: e,
+    }));
+  };
 
   return (
     <div className="flex  gap-2 flex-row">
-      <Select>
+      <Select onValueChange={(e) => handleDateChange(e, "month")} name="month">
         <SelectTrigger className="w-[280px]">
           <SelectValue placeholder="Month" />
         </SelectTrigger>
@@ -60,7 +72,7 @@ export function DOBContainer() {
           </SelectGroup>
         </SelectContent>
       </Select>
-      <Select>
+      <Select onValueChange={(e) => handleDateChange(e, "day")} name="day">
         <SelectTrigger className="w-[280px]">
           <SelectValue placeholder="Day" />
         </SelectTrigger>
@@ -68,7 +80,7 @@ export function DOBContainer() {
           <SelectGroup>
             {Array.from({ length: 31 }, (_, i) => {
               return (
-                <SelectItem key={i} value={i.toString() + 1}>
+                <SelectItem key={i} value={(i + 1).toString()}>
                   {i + 1}
                 </SelectItem>
               );
@@ -76,7 +88,7 @@ export function DOBContainer() {
           </SelectGroup>
         </SelectContent>
       </Select>
-      <Select>
+      <Select onValueChange={(e) => handleDateChange(e, "year")} name="year">
         <SelectTrigger className="w-[280px]">
           <SelectValue placeholder="Year" />
         </SelectTrigger>

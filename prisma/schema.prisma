@@ -17,12 +17,11 @@ model User {
   username  String     @unique
   password  String
   dob       String
-  avatar    String
-  channels  String // One-to-Many relationship: a user can be part of multiple channels
-  friends   String     
-  servers   String   
   createdAt DateTime   @default(now())
   updatedAt DateTime   @updatedAt
 }
 
-
+ //avatar    String
+ //channels  String // One-to-Many relationship: a user can be part of multiple channels
+ //friends   String     
+  //servers   String   

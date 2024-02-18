@@ -21,9 +21,18 @@ import {
   AlertDialogTrigger,
 } from "../ui/alert-dialog";
 const ControlBox = dynamic(() => import("./ControlBox/ControlBox"), {
-  loading: () => <p>Loading...</p>,
+  loading: () => <ControlBoxLoader />,
   ssr: false,
 });
+
+const ControlBoxLoader = () => {
+  return (
+    <div className="h-14 w-full p-1">
+      <div className="w-full h-12 bg-darkSecondaryColorHover rounded-sm animate-pulse"></div>
+    </div>
+  );
+};
+
 const FindSearchDialog = dynamic(
   () => import("../FindSearchDialog/FindSearchDiaog"),
   {
@@ -39,6 +48,7 @@ const FindSearchLoader = () => {
     </div>
   );
 };
+
 export default function MeSidebar() {
   const url = usePathname();
   const UrlArray = url.split("/");
@@ -55,7 +65,7 @@ export default function MeSidebar() {
   }, [url, UrlArray]);
 
   return (
-    <div className="w-[240px] min-w-[240px] bg-darkSecondaryColor2 h-screen sticky top-0">
+    <div className="w-full relative max-w-[240px] bg-darkSecondaryColor2 h-screen  top-0">
       <div className="containerOfSidebar">
         <FindSearchDialog />
         <hr className="bg-darkSecondaryColor h-[1px] border-0" />
@@ -85,7 +95,7 @@ export default function MeSidebar() {
             Direct Messages
           </p>
           <div className="messages">
-            <ScrollArea className="h-[calc(100vh-200px)]">
+            <ScrollArea className="h-[calc(100vh-248px)]">
               {Array.from({ length: 10 }, (_, i) => {
                 return (
                   <ContextMenuBox key={i} id={i}>
@@ -141,7 +151,6 @@ export default function MeSidebar() {
           </div>
         </div>
       </div>
-
       <ControlBox />
     </div>
   );

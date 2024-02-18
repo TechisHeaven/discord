@@ -6,8 +6,8 @@ import TextChannelsComp from "./TextChannels/TextChannels";
 
 export default async function ChannelsSidebar() {
   return (
-    <div className="max-w-[240px] w-full bg-darkSecondaryColor2 relative h-screen">
-      <div className="channelSidebar">
+    <div className="max-w-[240px] w-full bg-darkSecondaryColor2 relative box-border flex flex-col">
+      <div className="channelSidebar flex-1 block">
         <div className="header flex cursor-pointer hover:bg-darkSecondaryColorHover transition-colors items-center justify-between p-3 text-white text-sm px-4 border-b-[2px] shadow-sm border-gray-800">
           <h5>tempmail123&apos;s server</h5>
           <ChevronDown className="w-5 text-gray-300" />

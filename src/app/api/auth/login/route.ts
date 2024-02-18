@@ -1,3 +1,4 @@
+import { CompareHashedPassword } from "@/lib/HandleHasingPassword";
 import { CreateJwtToken, encrypt } from "@/lib/helpers/jwtHandler";
 import { PrismaClient } from "@prisma/client";
 import { cookies } from "next/headers";
@@ -18,9 +19,13 @@ export async function POST(request: NextRequest, response: NextResponse) {
         message: "User not found",
       });
     }
+    const hashedPassword = await CompareHashedPassword({
+      password,
+      hashedPassword: user.password,
+    });
 
-    const checkLogin = user.password === password;
-    if (checkLogin) {
+    // const checkLogin = user.password === password;
+    if (hashedPassword) {
       const { id, name } = user;
       const token = await encrypt({ id, name });
       return Response.json({ status: 200, message: "Login successful", token });

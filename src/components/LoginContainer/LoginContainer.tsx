@@ -6,7 +6,7 @@ import { useRouter } from "next/navigation";
 import { loginUser } from "@/actions/auth/action";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { z } from "zod";
-import { LoginFormSchema } from "@/lib/loginFormSchema";
+import { LoginFormSchema } from "@/lib/authFormSchema";
 import { zodResolver } from "@hookform/resolvers/zod";
 
 export default function LoginContainer() {

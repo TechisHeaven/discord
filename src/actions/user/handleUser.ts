@@ -31,3 +31,7 @@ export async function getSession() {
   }
   return decrypt(session);
 }
+
+export async function removeSession() {
+  cookies().delete("session-token");
+}
