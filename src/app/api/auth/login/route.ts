@@ -1,5 +1,5 @@
 import { CompareHashedPassword } from "@/lib/HandleHasingPassword";
-import { CreateJwtToken, encrypt } from "@/lib/helpers/jwtHandler";
+import { encrypt } from "@/lib/helpers/jwtHandler";
 import { PrismaClient } from "@prisma/client";
 import { cookies } from "next/headers";
 import { NextRequest, NextResponse } from "next/server";

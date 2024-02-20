@@ -10,6 +10,8 @@ import {
 } from "../ui/dialog";
 import { Camera } from "lucide-react";
 import Image from "next/image";
+import { processEnv } from "@/lib/helpers/processEnvCustom";
+import { serverCreate } from "@/actions/server/action";
 
 export default function AddServerDialog({
   children,
@@ -17,6 +19,7 @@ export default function AddServerDialog({
   children: React.ReactNode;
 }) {
   const [image, setImage] = useState({ preview: "", raw: "" });
+  const [name, setName] = useState("");
 
   const handleChange = (e: any) => {
     if (e.target.files.length) {
@@ -31,14 +34,11 @@ export default function AddServerDialog({
     e.preventDefault();
     const formData = new FormData();
     formData.append("image", image.raw);
-
-    await fetch("YOUR_URL", {
-      method: "POST",
-      headers: {
-        "Content-Type": "multipart/form-data",
-      },
-      body: formData,
-    });
+    formData.append("name", name);
+    const result = await serverCreate({ name, imageUrl: image.raw });
+    if (result.success) {
+      alert(result.message);
+    }
   };
 
   return (
@@ -54,7 +54,7 @@ export default function AddServerDialog({
             </p>
           </DialogTitle>
           <DialogDescription>
-            <form>
+            <form onSubmit={handleUpload}>
               <label htmlFor="upload-button">
                 {image.preview ? (
                   <div className="my-4">
@@ -83,7 +83,7 @@ export default function AddServerDialog({
               />
               <div className="flex flex-col gap-2">
                 <label
-                  htmlFor="email"
+                  htmlFor="name"
                   className="uppercase text-xs font-bold text-gray-300"
                 >
                   server name <span className="text-red-500">*</span>
@@ -91,8 +91,9 @@ export default function AddServerDialog({
                 <input
                   //   onChange={handleFormData}
                   type="text"
-                  id="email"
-                  name="email"
+                  id="name"
+                  onChange={(e) => setName(e.target.value)}
+                  name="name"
                   className="bg-gray-800 p-2 text-white outline-none rounded-sm"
                 />
                 <p className="text-xs text-gray-500">
@@ -101,6 +102,7 @@ export default function AddServerDialog({
                 </p>
               </div>
               <button
+                type="submit"
                 style={{ background: "hsl(235 calc(1 * 85.6%) 64.7% / 1)" }}
                 className="px-4 mt-4 py-2 text-white font-semibold rounded-sm  w-full"
               >

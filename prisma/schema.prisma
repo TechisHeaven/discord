@@ -11,17 +11,46 @@ datasource db {
 }
 
 model User {
-  id        String     @unique
-  email     String     @unique
+  id        String    @id @unique
+  email     String    @unique
   name      String
-  username  String     @unique
+  username  String    @unique
   password  String
   dob       String
-  createdAt DateTime   @default(now())
-  updatedAt DateTime   @updatedAt
+  avatar    String?
+  channels  Channel[]
+  servers   Server[]
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
 }
 
- //avatar    String
- //channels  String // One-to-Many relationship: a user can be part of multiple channels
- //friends   String     
-  //servers   String   
+model Channel {
+  id        String    @id
+  name      String
+  type      String // You may want to use an enum for channel types (e.g., 'text', 'voice')
+  messages  Message[]
+  users     User[]
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  Server    Server?   @relation(fields: [serverId], references: [id])
+  serverId  String?
+}
+
+model Server {
+  id        String    @id
+  name      String
+  users     User[]
+  channels  Channel[]
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+}
+
+model Message {
+  id        String   @id
+  content   String
+  userId    String
+  channelId String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  Channel   Channel  @relation(fields: [channelId], references: [id])
+}
