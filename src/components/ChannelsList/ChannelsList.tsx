@@ -1,9 +1,14 @@
 import Link from "next/link";
 import ToolTip from "../ToolTip/ToolTip";
 import Image from "next/image";
+import { cookies } from "next/headers";
+import { serversFetch } from "@/actions/server/action";
 
-export default function ChannelsList() {
+export default async function ChannelsList() {
   const imageUrl = "/profile.jpg";
+
+  const servers = await serversFetch();
+  console.log(servers);
   return (
     <div className="Channels flex flex-col gap-1 items-center">
       <ToolTip text={"tempmail server"}>

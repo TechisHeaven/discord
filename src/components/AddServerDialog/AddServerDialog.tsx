@@ -12,6 +12,9 @@ import { Camera } from "lucide-react";
 import Image from "next/image";
 import { processEnv } from "@/lib/helpers/processEnvCustom";
 import { serverCreate } from "@/actions/server/action";
+import { decrypt } from "@/lib/helpers/jwtHandler";
+import { cookies } from "next/headers";
+import { revalidateTag } from "next/cache";
 
 export default function AddServerDialog({
   children,
@@ -35,9 +38,14 @@ export default function AddServerDialog({
     const formData = new FormData();
     formData.append("image", image.raw);
     formData.append("name", name);
-    const result = await serverCreate({ name, imageUrl: image.raw });
+    const result = await serverCreate({
+      name,
+      imageUrl: image.raw,
+    });
+    console.log(result);
     if (result.success) {
       alert(result.message);
+      revalidateTag("servers");
     }
   };
 
