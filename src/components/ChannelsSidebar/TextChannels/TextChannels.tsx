@@ -9,7 +9,11 @@ import {
 import Link from "next/link";
 import { useState } from "react";
 
-export default function TextChannelsComp() {
+export default function TextChannelsComp({
+  item,
+}: {
+  item: { id: String; name: String; serverId: String; type: String };
+}) {
   const [expanded, setExpanded] = useState(true);
   return (
     <div className="text-channel">
@@ -31,7 +35,7 @@ export default function TextChannelsComp() {
           >
             <div className="flex items-center gap-2">
               <Hash className="text-gray-500 w-5" />
-              <p>general</p>
+              <p>{item.name}</p>
             </div>
             <div className="flex items-center gap-2">
               <UserRoundPlus className="text-gray-300 w-4" />

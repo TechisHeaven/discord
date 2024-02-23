@@ -10,8 +10,9 @@ export async function POST(request: NextRequest, response: NextResponse) {
   try {
     //generate a new UUID4
     const Serverid = uuid4();
-    const token = cookies().get("session-token")?.value;
-    console.log(token);
+
+    const session = request.headers.get("session-token");
+    const token = JSON.parse(session!);
     const { id } = await decrypt(token!);
     const userID = id;
     if (!id) {
@@ -41,7 +42,9 @@ export async function POST(request: NextRequest, response: NextResponse) {
           ],
         },
         users: {
-          create: [], // Specify your user data if needed
+          create: {
+            id: userID,
+          },
         },
       },
     });
@@ -85,7 +88,8 @@ export async function POST(request: NextRequest, response: NextResponse) {
 
 export async function GET(request: NextRequest, response: NextResponse) {
   try {
-    const token = cookies().get("session-token")?.value;
+    const session = request.headers.get("session-token");
+    const token = JSON.parse(session!);
     const { id } = await decrypt(token!);
     if (!id) {
       return Response.json({
@@ -97,18 +101,19 @@ export async function GET(request: NextRequest, response: NextResponse) {
     }
 
     const server = await prisma.server.findMany({
-      where: {
-        users: {
-          some: {
-            id,
-          },
-        },
+      select: {
+        id: true,
+        name: true,
+        users: true, // Include the users field
+        channels: true,
+        ownerId: true,
       },
     });
+
     if (server && server.length > 0) {
       return Response.json(
         {
-          ...server,
+          server,
           success: true,
           message: "Servers Fetched successfully",
           error: false,

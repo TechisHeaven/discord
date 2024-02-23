@@ -37,13 +37,21 @@ model Channel {
 }
 
 model Server {
-  id        String    @id
+  id        String       @id
   name      String
-  users     User[]
+  users     ServerUser[]
   ownerId   String
   channels  Channel[]
-  createdAt DateTime  @default(now())
-  updatedAt DateTime  @updatedAt
+  createdAt DateTime     @default(now())
+  updatedAt DateTime     @updatedAt
+  User      User?        @relation(fields: [userId], references: [id])
+  userId    String?
+}
+
+model ServerUser {
+  id       String  @id
+  Server   Server? @relation(fields: [serverId], references: [id])
+  serverId String?
 }
 
 model Message {

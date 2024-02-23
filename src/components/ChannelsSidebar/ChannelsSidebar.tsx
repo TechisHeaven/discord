@@ -1,10 +1,48 @@
+"use client";
 import { CalendarRange, ChevronDown } from "lucide-react";
 import ControlBox from "./ControlBox/ControlBox";
 
 import VoiceChannels from "./VoiceChannels/VoiceChannels";
 import TextChannelsComp from "./TextChannels/TextChannels";
+import { getSideBarChannels } from "@/actions/server/action";
+import { usePathname } from "next/navigation";
+import { useEffect, useState } from "react";
+import { Voltaire } from "next/font/google";
+export default function ChannelsSidebar() {
+  const [channels, setChannels] = useState(null);
+  const pathname = usePathname();
+  const channelId = pathname.split("/").splice(2, 1)[0];
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const result = await getSideBarChannels(channelId);
+        setChannels(result.channels);
+      } catch (error) {
+        console.error("Error fetching data:", error);
+        // Handle error if needed
+      }
+    };
 
-export default async function ChannelsSidebar() {
+    fetchData();
+  }, [channelId]);
+  if (!channels) {
+    return "loading...";
+  }
+  return <ChannelsSidebarContent channels={channels} />;
+}
+
+function ChannelsSidebarContent({
+  channels,
+}: {
+  channels: {
+    id: String;
+    name: String;
+    serverId: String;
+    type: String;
+  }[];
+}) {
+  // channels type change later
+
   return (
     <div className="max-w-[240px] w-full bg-darkSecondaryColor2 relative box-border flex flex-col">
       <div className="channelSidebar flex-1 block">
@@ -19,8 +57,21 @@ export default async function ChannelsSidebar() {
           </div>
           <hr className="w-full h-[1px] bg-gray-600 border-0" />
           <div className="channels-groups my-4 flex flex-col gap-4">
-            <TextChannelsComp />
-            <VoiceChannels />
+            {channels.map(
+              (item: {
+                id: String;
+                name: String;
+                serverId: String;
+                type: String;
+              }) => {
+                return (
+                  <>
+                    {item.type === "text" && <TextChannelsComp item={item} />}
+                    {item.type === "voice" && <VoiceChannels item={item} />}
+                  </>
+                );
+              }
+            )}
           </div>
         </div>
       </div>

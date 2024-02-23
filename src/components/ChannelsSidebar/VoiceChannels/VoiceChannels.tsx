@@ -8,7 +8,16 @@ import {
 } from "lucide-react";
 import { useState } from "react";
 
-export default function VoiceChannels() {
+export default function VoiceChannels({
+  item,
+}: {
+  item: {
+    id: String;
+    name: String;
+    type: String;
+    serverId: String;
+  };
+}) {
   const [expanded, setExpanded] = useState(true);
   return (
     <div className="voice-channel">
@@ -27,7 +36,7 @@ export default function VoiceChannels() {
           <div className="child p-1 px-2 hover:bg-darkSecondaryColorHover rounded-sm cursor-pointer flex items-center justify-between gap-2 text-white">
             <div className="flex items-center gap-2">
               <Volume2 className="text-gray-500 w-5" />
-              <p>General</p>
+              <p>{item.name}</p>
             </div>
             <div className="flex items-center gap-2">
               <UserRoundPlus className="text-gray-300 w-4" />
