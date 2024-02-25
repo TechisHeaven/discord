@@ -49,7 +49,7 @@ model Server {
 }
 
 model ServerUser {
-  id       String  @id
+  user_id  String  @id
   Server   Server? @relation(fields: [serverId], references: [id])
   serverId String?
 }

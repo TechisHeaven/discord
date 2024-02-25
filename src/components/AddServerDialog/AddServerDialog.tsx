@@ -14,7 +14,7 @@ import { processEnv } from "@/lib/helpers/processEnvCustom";
 import { serverCreate } from "@/actions/server/action";
 import { decrypt } from "@/lib/helpers/jwtHandler";
 import { cookies } from "next/headers";
-import { revalidateTag } from "next/cache";
+import { revalidatePath, revalidateTag } from "next/cache";
 
 export default function AddServerDialog({
   children,
@@ -23,7 +23,7 @@ export default function AddServerDialog({
 }) {
   const [image, setImage] = useState({ preview: "", raw: "" });
   const [name, setName] = useState("");
-
+  const [modalOpen, setModalOpen] = useState<undefined | boolean>();
   const handleChange = (e: any) => {
     if (e.target.files.length) {
       setImage({
@@ -44,13 +44,12 @@ export default function AddServerDialog({
     });
     console.log(result);
     if (result.success) {
-      alert(result.message);
-      revalidateTag("servers");
+      setModalOpen(false);
     }
   };
 
   return (
-    <Dialog>
+    <Dialog open={modalOpen}>
       <DialogTrigger>{children}</DialogTrigger>
       <DialogContent className="bg-black/15  border-none">
         <DialogHeader>

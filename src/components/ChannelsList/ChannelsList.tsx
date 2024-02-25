@@ -10,7 +10,7 @@ export default async function ChannelsList() {
 
   return (
     <div className="Channels flex flex-col gap-1 items-center">
-      {result.server.map((item: any) => {
+      {result.server?.map((item: any) => {
         return (
           <ToolTip text={item.name} key={item.id}>
             <Link href={`/channels/${item.id}/${item.channels[0].id}`}>

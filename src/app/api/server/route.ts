@@ -10,6 +10,20 @@ export async function POST(request: NextRequest, response: NextResponse) {
   try {
     //generate a new UUID4
     const Serverid = uuid4();
+    const existingServer = await prisma.server.findUnique({
+      where: {
+        id: Serverid,
+      },
+    });
+
+    if (existingServer) {
+      return Response.json({
+        status: 409, // Conflict status code
+        error: true,
+        success: false,
+        message: "Server with the specified ID already exists",
+      });
+    }
 
     const session = request.headers.get("session-token");
     const token = JSON.parse(session!);
@@ -41,15 +55,23 @@ export async function POST(request: NextRequest, response: NextResponse) {
             },
           ],
         },
+        users: {},
+      },
+    });
+    const result = await prisma.server.update({
+      where: {
+        id: Serverid,
+      },
+      data: {
         users: {
-          create: {
+          connect: {
             id: userID,
           },
         },
       },
     });
-    console.log(newServer);
-    if (newServer) {
+    console.log(result);
+    if (newServer && result) {
       return Response.json(
         {
           ...newServer,
@@ -101,6 +123,9 @@ export async function GET(request: NextRequest, response: NextResponse) {
     }
 
     const server = await prisma.server.findMany({
+      where: {
+        users: {},
+      },
       select: {
         id: true,
         name: true,
@@ -109,6 +134,8 @@ export async function GET(request: NextRequest, response: NextResponse) {
         ownerId: true,
       },
     });
+
+    console.log(server);
 
     if (server && server.length > 0) {
       return Response.json(

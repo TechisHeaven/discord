@@ -1,6 +1,7 @@
 "use server";
 import { decrypt } from "@/lib/helpers/jwtHandler";
 import { processEnv } from "@/lib/helpers/processEnvCustom";
+import { revalidateTag } from "next/cache";
 import { cookies } from "next/headers";
 
 export async function serverCreate(formData: any) {
@@ -17,6 +18,7 @@ export async function serverCreate(formData: any) {
     });
 
     const data = await response.json();
+    revalidateTag("servers");
 
     return data;
   } catch (error) {
@@ -42,7 +44,7 @@ export async function serversFetch() {
     });
 
     const data = await response.json();
-
+    console.log(data);
     return data;
   } catch (error) {
     console.error("Error:", error);
@@ -67,7 +69,7 @@ export async function getSideBarChannels(channelId: String) {
     );
 
     const data = await response.json();
-
+    console.log(data);
     return data[0];
   } catch (error) {
     console.error("Error:", error);
